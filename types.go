@@ -1,6 +1,7 @@
 package main
 
-type message struct {
+type Message struct {
+	Text     string `json:"text"`
 	FromUser string `json:"from_user"`
 	Date     string `json:"date"`
 }
