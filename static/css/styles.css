@@ -1,0 +1,8 @@
+#messages {
+    height: 350px;
+    width: 40%;
+    overflow: scroll;
+}
+p {
+    margin: 0px;
+}
