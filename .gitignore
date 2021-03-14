@@ -1,2 +1,4 @@
 *.exe
 *.log
+.DS_Store
+chat
