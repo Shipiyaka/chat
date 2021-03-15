@@ -11,7 +11,6 @@ func upgradeToWebSocketConn(w http.ResponseWriter, r *http.Request) {
 	conn, _, _, err := ws.UpgradeHTTP(r, w)
 	if err != nil {
 		logger.Error(err)
-		http.Error(w, "Cannot upgrade connection to ws", http.StatusInternalServerError)
 		return
 	}
 
