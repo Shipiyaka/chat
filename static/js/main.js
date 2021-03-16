@@ -35,9 +35,9 @@ function sendMessage() {
 
 function updateMessageContainer(message) {
     let messageContainer = document.getElementById("messages");
-    let kindOfMessage = (message.from_user == username ? "outgoingMessage" : "incomingMessage");
+    let kindOfMessage = (message.from_user === username ? "outgoingMessage" : "incomingMessage");
     let photo = (
-        message.from_user == username 
+        message.from_user === username
         ? "../static/images/profile_pic/photo_2021-03-12 00.39.30.jpeg" 
         : "../static/images/profile_pic/photo_2021-03-13 14.44.40.jpeg"
     );

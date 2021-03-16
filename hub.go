@@ -10,8 +10,8 @@ import (
 
 var (
 	chatParticipants = make(map[string]net.Conn)
-	newParticipantCh = make(chan net.Conn)
-	deleteConnCh     = make(chan net.Conn)
+	newParticipantCh = make(chan net.Conn, 10)
+	deleteConnCh     = make(chan net.Conn, 10)
 )
 
 func handleMessagesFromConn(conn net.Conn) {
