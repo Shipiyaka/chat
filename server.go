@@ -19,7 +19,7 @@ func upgradeToWebSocketConn(w http.ResponseWriter, r *http.Request) {
 	newParticipantCh <- conn
 }
 
-func chatPage(w http.ResponseWriter, r *http.Request) {
+func chatPage(w http.ResponseWriter, _ *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./templates/index.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {
