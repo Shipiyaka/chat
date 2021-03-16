@@ -53,7 +53,9 @@ function updateMessageContainer(message) {
         </div>
         <div class="messageTime">${message.date}</div>
     </div>
-</div>`
+</div>
+
+    messageContainer.scrollTop = messageContainer.scrollHeight - messageContainer.clientHeight;
 }
 
 function createWebSocketEvents() {
