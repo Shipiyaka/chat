@@ -6,16 +6,18 @@ body {
     background-color: #fff;
 }
 
-:active, :hover, :focus {
+:active,
+ :hover,
+ :focus {
     outline: 0;
     outline-offset: 0;
 }
 
 img {
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 *,
@@ -24,25 +26,24 @@ img {
     box-sizing: border-box;
 }
 
-html, body, div, p, img { 
-    padding:0;
-    margin:0 
-}
 
 /* Container */
+
 .container {
     width: 100%;
     margin: 0 auto;
     background-color: white;
 }
 
+
 /* Header */
+
 .header {
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 22px;
-    background-color:#fff;
+    background-color: #fff;
     top: 0;
     position: fixed;
     left: 0;
@@ -57,7 +58,7 @@ html, body, div, p, img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:#fff;
+    background-color: #fff;
 }
 
 .headerLogo {
@@ -69,7 +70,9 @@ html, body, div, p, img {
     padding-left: 2.1%;
 }
 
+
 /* wholeChatWindow */
+
 .wholeChatWindow {
     width: 100%;
     position: relative;
@@ -82,18 +85,19 @@ html, body, div, p, img {
 
 .chat {
     width: 100%;
-    background-color:whitesmoke;
+    background-color: whitesmoke;
     overflow: scroll;
     vertical-align: middle;
-    margin-left:auto; 
-    margin-right:auto; 
-    position: relative;
-    padding-top:53px; 
-    padding-bottom: 53px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 70px;
+    padding-bottom: 60px;
     height: 100%;
 }
 
+
 /* blockChatName */
+
 .blockChatName {
     width: 100%;
     background-color: white;
@@ -124,23 +128,9 @@ html, body, div, p, img {
     height: 45px;
 }
 
-/* messages */
-#messages {        
-    vertical-align: middle;
-    overflow: scroll;
-    width: 100%;
-    position: relative;
-    padding-top: 20px;
-    padding-bottom: 53px;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-div ::-webkit-scrollbar {
-    display: none;
-}
 
 /* IncomingMessage */
+
 .incomingMessage {
     width: 100%;
     margin: 0 auto;
@@ -167,20 +157,22 @@ div ::-webkit-scrollbar {
 
 .incomingMessageText {
     margin-bottom: 12px;
-    background-color:#3b414a; 
+    background-color: #3b414a;
     padding: 10px 20px;
-    color:#ffffff; 
-    -moz-border-radius: 20px; 
-    -webkit-border-radius: 20px; 
+    color: #ffffff;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
     border-radius: 20px;
-    text-align: justify; 
+    text-align: justify;
 }
 
 .incomingMessageLogin {
     font-weight: 700;
 }
 
+
 /*outgoingMessage*/
+
 .outgoingMessage {
     width: 100%;
     margin: 0 auto;
@@ -207,20 +199,22 @@ div ::-webkit-scrollbar {
 
 .outgoingMessageText {
     margin-bottom: 12px;
-    background-color:#fff; 
+    background-color: #fff;
     padding: 10px 20px;
-    color:#60656c; 
-    -moz-border-radius: 20px; 
-    -webkit-border-radius: 20px; 
+    color: #60656c;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
     border-radius: 20px;
-    text-align: justify; 
+    text-align: justify;
 }
 
 .outgoingMessageLogin {
     font-weight: 700;
 }
 
+
 /* messageTime */
+
 .messageTime {
     float: right;
     position: absolute;
@@ -229,29 +223,31 @@ div ::-webkit-scrollbar {
     color: #9696a0;
 }
 
+
 /* middleMessage */
-.middleMessage { 
-    width:130px; 
+
+.middleMessage {
+    width: 130px;
     margin: 15px auto;
     position: relative;
-    clear: both; 
+    clear: both;
     padding: 4px 10px 4px 10px;
-    color:#ffffff; 
-    -moz-border-radius: 20px; 
-    -webkit-border-radius: 20px; 
+    color: #ffffff;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
     border-radius: 20px;
-    text-align: justify; 
-    background-color:rgba(200, 200, 200, 0.4); 
-    text-align:center; 
+    text-align: justify;
+    background-color: rgba(200, 200, 200, 0.4);
+    text-align: center;
 }
 
+
 /* messageForm */
+
 .messageForm {
     position: fixed;
-    bottom: 0;
     left: 0;
     margin-bottom: 0px;
-    margin-top: 500px;
     padding: 10px;
     background-color: white;
     bottom: 0;
@@ -272,7 +268,7 @@ div ::-webkit-scrollbar {
 }
 
 input {
-  caret-color: #60656c;
+    caret-color: #60656c;
 }
 
 .sendButton {
