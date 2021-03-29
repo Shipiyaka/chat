@@ -40,7 +40,7 @@ function updateMessageContainer(message) {
         message.from_user === username ?
         "../static/images/profile_pic/photo_2021-03-12 00.39.30.jpeg" :
         "../static/images/profile_pic/photo_2021-03-13 14.44.40.jpeg"
-    );
+    )
 
     messageContainer.innerHTML += `<div class="${kindOfMessage}">
     <!-- ${kindOfMessage} -->

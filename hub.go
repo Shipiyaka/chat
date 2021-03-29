@@ -61,9 +61,9 @@ func eventHandler() {
 
 			go handleMessagesFromConn(chatParticipants[username])
 		case connToDelete := <-deleteConnCh:
+			connToDelete.Close()
 			for username, conn := range chatParticipants {
 				if conn == connToDelete {
-					connToDelete.Close()
 					delete(chatParticipants, username)
 					break
 				}
