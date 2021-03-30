@@ -55,7 +55,7 @@ function updateMessageContainer(message) {
     </div>
 </div>`
 
-    messageContainer.scrollTop = messageContainer.scrollHeight - messageContainer.clientHeight;
+    document.body.scrollTop = document.body.scrollHeight - document.body.clientHeight;
 }
 
 function createWebSocketEvents() {
