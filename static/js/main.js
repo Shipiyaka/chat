@@ -34,7 +34,7 @@ function sendMessage() {
 }
 
 function updateMessageContainer(message) {
-    let messageContainer = document.getElementsByClassName("chat")[0];
+    let messageContainer = document.getElementById("messages");
     let kindOfMessage = (message.from_user === username ? "outgoingMessage" : "incomingMessage");
     let photo = (
         message.from_user === username ?

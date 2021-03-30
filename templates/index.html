@@ -22,21 +22,21 @@
     <div class="wholeChatWindow">
         <div class="container">
             <div class="chat">
-                <!-- <div class="blockChatName">
-                    <div class="chatRoomPic">
-                        <img src="../static/images/profile_pic/photo_2021-03-13 14.44.40.jpeg" alt="" />
-                    </div>
-                    <div class="chatRoomName">Otter Tree</div>
-                </div> .blockChatName -->
+                <div id="messages">
+
+                </div>
+                <!-- /.messages -->
+
+                <div class="messageForm">
+                    <button type="send" class="sendAttachButton" onclick=""></button>
+                    <input type="text" id="messageInput" placeholder="Write a message...">
+                    <button type="send" class="sendButton" onclick="sendMessage()"></button>
+                </div>
+
             </div>
             <!-- /.chat -->
-            <div class="messageForm">
-                <input type="text" id="messageInput" placeholder="Write a message...">
-                <button type="send" class="sendButton" onclick="sendMessage()"></button>
-            </div>
         </div>
         <!-- /.container -->
-
     </div>
     <!-- /.wholeChatWindow -->
 
