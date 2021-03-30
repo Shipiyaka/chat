@@ -3,7 +3,7 @@ body {
     color: #333;
     font-size: 13px;
     font-family: 'Montserrat', sans-serif;
-    background-color: #fff;
+    background-color: whitesmoke;
 }
 
 :active, :hover, :focus {
@@ -78,6 +78,8 @@ html, body, div, p, img {
     left: 0;
     right: 0;
     z-index: 999;
+    overflow: hidden;
+    display: flex;
 }
 
 .chat {
@@ -88,9 +90,8 @@ html, body, div, p, img {
     margin-left:auto; 
     margin-right:auto; 
     position: relative;
-    padding-top:53px; 
-    padding-bottom: 53px;
-    height: 100%;
+    top:53px; 
+    padding-bottom: 105px;
 }
 
 /* blockChatName */
@@ -131,6 +132,12 @@ html, body, div, p, img {
     width: 100%;
     position: relative;
     padding-top: 20px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+div ::-webkit-scrollbar {
+    display: none;
 }
 
 /* IncomingMessage */
@@ -243,11 +250,8 @@ html, body, div, p, img {
     position: fixed;
     bottom: 0;
     left: 0;
-    margin-bottom: 0px;
-    margin-top: 500px;
     padding: 10px;
     background-color: white;
-    bottom: 0;
     width: 100%;
     align-items: center;
     display: flex;
@@ -257,11 +261,10 @@ html, body, div, p, img {
 }
 
 #messageInput {
-    width: 95%;
+    width: 90%;
     height: 35px;
     outline: none;
     border: none;
-    padding-left: 50px;
 }
 
 input {
@@ -285,6 +288,30 @@ input {
 
 .sendButton:active {
     background: url(../images/icons/sent-mail-active.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.sendAttachButton {
+    width: 30px;
+    height: 30px;
+    padding-left: 10px;
+    padding-right: 50px;
+    margin-left: 20px;
+    outline: none;
+    border: none;
+    background: url(../images/icons/attachment.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+}
+
+.sendAttachButton:hover {
+    cursor: pointer;
+}
+
+.sendAttachButton:active {
+    background: url(../images/icons/attachment-active.png);
     background-size: 30px 30px;
     background-repeat: no-repeat;
     opacity: 1;
