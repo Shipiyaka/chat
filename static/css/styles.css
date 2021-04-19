@@ -148,7 +148,7 @@ img {
     position: relative;
     max-width: 640px;
     clear: both;
-    float: left;
+    float: left; 
 }
 
 .incomingMessageItem {
@@ -157,15 +157,15 @@ img {
 
 .incomingMessageProfilePic {
     position: absolute;
-    top: 0;
+    top: 6px;
     left: -60px;
     z-index: 1;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
 }
 
-.incomingMessageText {
+.incomingMessageContent {
     margin-bottom: 12px;
     background-color: #3b414a;
     padding: 10px 20px;
@@ -174,10 +174,22 @@ img {
     -webkit-border-radius: 20px;
     border-radius: 20px;
     text-align: justify;
+    display: block;
+    float: left;
+    max-width: 640px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all;  
+    position: relative;
+    top: 0;
+    left: 0;
+    min-width: 170px;
 }
 
 .incomingMessageLogin {
     font-weight: 700;
+    position: relative;
+    top: -3px;
 }
 
 
@@ -199,15 +211,15 @@ img {
 
 .outgoingMessageProfilePic {
     position: absolute;
-    top: 0;
-    right: -60px;
+    top: 6px;
+    right: -60;
     z-index: 1;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
 }
 
-.outgoingMessageText {
+.outgoingMessageContent {
     margin-bottom: 12px;
     background-color: #fff;
     padding: 10px 20px;
@@ -216,23 +228,46 @@ img {
     -webkit-border-radius: 20px;
     border-radius: 20px;
     text-align: justify;
+    display: block;
+    float: right;
+    max-width: 640px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-all; 
+    position: relative;
+    top: 0;
+    right: 0;
+    min-width: 170px;
 }
 
 .outgoingMessageLogin {
     font-weight: 700;
+    position: relative;
+    top: -3px;
 }
 
 
-/* messageTime */
+/* messageTime, messagePic */
 
 .messageTime {
-    float: right;
-    position: absolute;
-    bottom: 5px;
-    right: 15px;
     color: #9696a0;
+    position: absolute;
+    top: 8px;
+    right: 20px;
 }
 
+.messagePic {
+    max-width: 555px;
+    max-height: 400px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    min-width: 100px;
+    min-height: 30px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: -11px;
+    margin-top: 3px;
+}
 
 /* middleMessage */
 
