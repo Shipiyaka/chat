@@ -10,8 +10,8 @@ import (
 
 var (
 	chatParticipants = make(map[string]net.Conn)
-	newParticipantCh = make(chan net.Conn)
-	deleteConnCh     = make(chan net.Conn)
+	newParticipantCh = make(chan net.Conn, 10)
+	deleteConnCh     = make(chan net.Conn, 10)
 )
 
 func handleMessagesFromConn(conn net.Conn) {
@@ -61,9 +61,9 @@ func eventHandler() {
 
 			go handleMessagesFromConn(chatParticipants[username])
 		case connToDelete := <-deleteConnCh:
-			connToDelete.Close()
 			for username, conn := range chatParticipants {
 				if conn == connToDelete {
+					connToDelete.Close()
 					delete(chatParticipants, username)
 					break
 				}
