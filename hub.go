@@ -51,7 +51,8 @@ func eventHandler() {
 			username := randomString()
 			chatParticipants[username] = newConn
 
-			b, _ := json.Marshal(map[string]string{"username": username})
+			b, _ := json.Marshal(User{Username: username})
+
 			err := wsutil.WriteServerMessage(newConn, ws.OpText, b)
 			if err != nil {
 				deleteConnCh <- newConn

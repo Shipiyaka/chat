@@ -17,17 +17,21 @@ var seededRand *rand.Rand = rand.New(
 
 func randomString() string {
 	b := make([]byte, randomStringLen)
+	
 	for i := range b {
 		b[i] = charset[seededRand.Intn(len(charset))]
 	}
+	
 	return string(b)
 }
 
 func unmarshalMessage(b []byte) (Message, error) {
 	var message Message
+	
 	err := json.Unmarshal(b, &message)
 	if err != nil {
 		return message, err
 	}
+	
 	return message, nil
 }

@@ -2,35 +2,55 @@ const socket = new WebSocket("ws://localhost:12345/ws");
 const messageInput = document.getElementById("messageInput");
 messageInput.addEventListener("keyup", ({ key }) => {
     if (key === "Enter") {
-        sendMessage();
+        sendText();
     }
 });
 
 let username;
 
-function sendMessage() {
+function sendText() {
     let text = messageInput.value;
     if (text === "") {
         return;
     }
     messageInput.value = "";
 
+    message = prepareMessageObject("text", text)
+    
+    updateMessageContainer(message);
+
+    socket.send(JSON.stringify(message))
+}
+
+function sendImg(src) {
+    message = prepareMessageObject("img", src)
+    
+    updateMessageContainer(message);
+
+    socket.send(JSON.stringify(message))
+}
+
+function prepareMessageObject(type, content) {
     let date = new Date().toLocaleTimeString(
         'en-US', {
             hour12: false,
             hour: "numeric",
             minute: "numeric"
-        });
+        }
+    );
 
     let message = {
-        text: text,
         from_user: username,
         date: date
+    };
+
+    if (type === "text") {
+        message.text = content;
+    } else  if (type === "img") {
+        message.img = content;
     }
 
-    updateMessageContainer(message);
-
-    socket.send(JSON.stringify(message))
+    return message
 }
 
 function updateMessageContainer(message) {
@@ -41,17 +61,19 @@ function updateMessageContainer(message) {
         "../static/images/profile_pic/photo_2021-03-12 00.39.30.jpeg" :
         "../static/images/profile_pic/photo_2021-03-13 14.44.40.jpeg"
     )
+    
+    essenceOfMessage = ("img" in message ? `<img class="messagePic" src=${message.img}>` : message.text)
 
     messageContainer.innerHTML += `<div class="${kindOfMessage}">
     <!-- ${kindOfMessage} -->
     <div class="${kindOfMessage}Item">
         <img class="${kindOfMessage}ProfilePic"
             src="${photo}">
-        <div class="${kindOfMessage}Text">
+        <div class="${kindOfMessage}Content">
             <div class="${kindOfMessage}Login">${message.from_user}</div>
-            ${message.text}
+            ${essenceOfMessage}
+            <div class="messageTime">${message.date}</div>
         </div>
-        <div class="messageTime">${message.date}</div>
     </div>
 </div>`
 
@@ -72,5 +94,20 @@ function createWebSocketEvents() {
         updateMessageContainer(message)
     };
 }
+
+function uploadFile() {
+    let filesSelected = document.getElementById("getFile").files;
+    if (filesSelected.length > 0) {
+      let fileToLoad = filesSelected[0];
+
+      let fileReader = new FileReader();
+
+      fileReader.onload = function(fileLoadedEvent) {
+        let srcData = fileLoadedEvent.target.result;
+        sendImg(srcData);
+      }
+      fileReader.readAsDataURL(fileToLoad);
+    }
+  }
 
 window.onload = createWebSocketEvents;
