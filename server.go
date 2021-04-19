@@ -2,45 +2,11 @@ package main
 
 import (
 	"html/template"
-	"io"
-	"log"
 	"net/http"
-	"os"
+	"time"
 
 	"github.com/gobwas/ws"
-	"github.com/sirupsen/logrus"
 )
-
-var (
-	logger  *logrus.Logger
-	logFile *os.File
-)
-
-func init() {
-	var err error
-	logFile, err = os.OpenFile("logs.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-	if err != nil {
-		log.Fatalf("Error opening log file: %s", err.Error())
-	}
-
-	logger = logrus.New()
-	logger.Formatter = &logrus.JSONFormatter{}
-	logger.SetOutput(io.MultiWriter(os.Stdout, logFile))
-
-	logger.Info("Logging started")
-}
-
-func main() {
-	defer logFile.Close()
-
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", chatPage)
-	http.HandleFunc("/ws", upgradeToWebSocketConn)
-
-	go eventHandler()
-
-	logger.Panic(http.ListenAndServe(":12345", nil))
-}
 
 func upgradeToWebSocketConn(w http.ResponseWriter, r *http.Request) {
 	conn, _, _, err := ws.UpgradeHTTP(r, w)
@@ -61,4 +27,22 @@ func chatPage(w http.ResponseWriter, _ *http.Request) {
 		logger.Error(err)
 		http.Error(w, "Error while parsing html file", http.StatusInternalServerError)
 	}
+}
+
+func getServerInstance() *http.Server {
+	mux := http.NewServeMux()
+
+	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.HandleFunc("/", chatPage)
+	mux.HandleFunc("/ws", upgradeToWebSocketConn)
+
+	srv := &http.Server{
+		Addr:         "localhost:12345",
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 60,
+		Handler:      mux,
+	}
+
+	return srv
 }

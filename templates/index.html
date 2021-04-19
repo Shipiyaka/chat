@@ -28,9 +28,10 @@
                 <!-- /.messages -->
 
                 <div class="messageForm">
-                    <button type="send" class="sendAttachButton" onclick=""></button>
+                    <input type="file" id="getFile" style="display: none" onchange="uploadFile()">
+                    <button class="sendAttachButton" onclick="document.getElementById('getFile').click()"></button>
                     <input type="text" id="messageInput" placeholder="Write a message...">
-                    <button type="send" class="sendButton" onclick="sendMessage()"></button>
+                    <button type="send" class="sendButton" onclick="sendText()()"></button>
                 </div>
 
             </div>
