@@ -30,7 +30,11 @@ func EventHandler() {
 
 			history := make([]db.Message, 0)
 			err := db.ReturnValues(map[string]interface{}{}, &history)
-			if err == nil {
+			if err != nil {
+				logging.Logger.Error(err)
+			} else if len(history) == 0 {
+				logging.Logger.Info("0 entries in message history")
+			} else {
 				for _, oldMessage := range history {
 					var forSending message
 
