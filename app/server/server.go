@@ -1,43 +1,47 @@
-package main
+package server
 
 import (
+	"chat/app/hub"
+	"chat/app/logging"
 	"html/template"
 	"net/http"
 	"time"
 
-	"github.com/gobwas/ws"
+	"github.com/gorilla/websocket"
 )
 
-func upgradeToWebSocketConn(w http.ResponseWriter, r *http.Request) {
-	conn, _, _, err := ws.UpgradeHTTP(r, w)
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  16384,
+	WriteBufferSize: 16384,
+}
+
+func upgradeConnToWS(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		logger.Error(err)
+		logging.Logger.Error(err)
 		return
 	}
 
-	logger.Info("New connection")
-
-	newParticipantCh <- conn
+	hub.NewConnCh <- conn
 }
 
-func chatPage(w http.ResponseWriter, _ *http.Request) {
+func chatPage(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("./templates/index.html"))
 	err := tmpl.Execute(w, nil)
 	if err != nil {
-		logger.Error(err)
 		http.Error(w, "Error while parsing html file", http.StatusInternalServerError)
 	}
 }
 
-func getServerInstance() *http.Server {
+func GetServerInstance(addr string) *http.Server {
 	mux := http.NewServeMux()
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/", chatPage)
-	mux.HandleFunc("/ws", upgradeToWebSocketConn)
+	mux.HandleFunc("/ws", upgradeConnToWS)
 
 	srv := &http.Server{
-		Addr:         "localhost:12345",
+		Addr:         addr,
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,

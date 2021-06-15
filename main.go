@@ -1,52 +1,44 @@
 package main
 
 import (
+	"chat/app/hub"
+	"chat/app/logging"
+	"chat/app/server"
+	"chat/config"
 	"context"
-	"io"
-	"log"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"github.com/sirupsen/logrus"
+	"github.com/caarlos0/env/v6"
 )
 
 var (
-	logger  *logrus.Logger
-	logFile *os.File
+	cfg config.Config
 )
 
 func init() {
-	var err error
-	logFile, err = os.OpenFile("logs.log", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
-	if err != nil {
-		log.Fatalf("error opening log file: %s", err.Error())
+	logging.InitLogger()
+	logging.Logger.Info("Logging started")
+
+	if err := env.Parse(&cfg); err != nil {
+		logging.Logger.Fatal(err)
 	}
-
-	logger = logrus.New()
-	logger.Formatter = &logrus.JSONFormatter{}
-	logger.SetOutput(io.MultiWriter(os.Stdout, logFile))
-
-	logger.Info("logging started")
 }
 
 func main() {
-	defer logFile.Close()
-
-	srv := getServerInstance()
+	srv := server.GetServerInstance(cfg.ServerAddr)
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
-			logger.Error(err)
+			logging.Logger.Error(err)
 		}
 	}()
 
-	go eventHandler()
+	go hub.EventHandler()
 
 	sigs := make(chan os.Signal, 1)
-
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
-
 	<-sigs
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
@@ -54,6 +46,6 @@ func main() {
 
 	err := srv.Shutdown(ctx)
 	if err != nil {
-		logger.Error(err)
+		logging.Logger.Error(err)
 	}
 }

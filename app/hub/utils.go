@@ -1,4 +1,4 @@
-package main
+package hub
 
 import (
 	"encoding/json"
@@ -25,8 +25,8 @@ func randomString() string {
 	return string(b)
 }
 
-func unmarshalMessage(b []byte) (Message, error) {
-	var message Message
+func unmarshalMessage(b []byte) (message, error) {
+	var message message
 	
 	err := json.Unmarshal(b, &message)
 	if err != nil {

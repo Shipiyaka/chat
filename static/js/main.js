@@ -1,5 +1,6 @@
 const socket = new WebSocket("ws://localhost:12345/ws");
 const messageInput = document.getElementById("messageInput");
+
 messageInput.addEventListener("keyup", ({ key }) => {
     if (key === "Enter") {
         sendText();
