@@ -61,17 +61,19 @@ func (c *client) write() {
 
 			w, err := c.conn.NextWriter(websocket.TextMessage)
 			if err != nil {
+				logging.Logger.Error(err)
 				return
 			}
 
 			w.Write(message.serialize())
 
 			if err := w.Close(); err != nil {
+				logging.Logger.Error(err)
 				return
 			}
 		case <-ticker.C:
-			c.conn.SetWriteDeadline(time.Now().Add(10 * time.Second))
 			if err := c.conn.WriteMessage(websocket.PingMessage, nil); err != nil {
+				logging.Logger.Error(err)
 				return
 			}
 		}

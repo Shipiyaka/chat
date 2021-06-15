@@ -39,6 +39,7 @@ func EventHandler() {
 				return nil
 			})
 		case clientToRemove := <-deleteClientCh:
+			close(chatParticipants[clientToRemove].incoming)
 			delete(chatParticipants, clientToRemove)
 		case newMessage := <-newMessageCh:
 			for username, client := range chatParticipants {
