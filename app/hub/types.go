@@ -21,8 +21,7 @@ type client struct {
 
 func (c *client) read() {
 	defer func() {
-		deleteClientCh <- c.ChatUsername
-		c.conn.Close()
+		deleteClientCh <- c
 	}()
 
 	for {
@@ -46,9 +45,8 @@ func (c *client) write() {
 	ticker := time.NewTicker(30 * time.Second)
 
 	defer func() {
-		deleteClientCh <- c.ChatUsername
+		deleteClientCh <- c
 		ticker.Stop()
-		c.conn.Close()
 	}()
 
 	for {

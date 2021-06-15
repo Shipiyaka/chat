@@ -11,7 +11,7 @@ var (
 
 	NewConnCh = make(chan *websocket.Conn, 1)
 
-	deleteClientCh = make(chan string, 1)
+	deleteClientCh = make(chan *client, 1)
 
 	newMessageCh = make(chan message, 1)
 )
@@ -34,13 +34,14 @@ func EventHandler() {
 			newConn.SetCloseHandler(func(code int, text string) error {
 				logging.Logger.Infof("Closed by %s. Code: %d, text: %s", randomUsername, code, text)
 
-				deleteClientCh <- randomUsername
+				deleteClientCh <- client
 
 				return nil
 			})
 		case clientToRemove := <-deleteClientCh:
-			close(chatParticipants[clientToRemove].incoming)
-			delete(chatParticipants, clientToRemove)
+			clientToRemove.conn.Close()
+			close(clientToRemove.incoming)
+			delete(chatParticipants, clientToRemove.ChatUsername)
 		case newMessage := <-newMessageCh:
 			for username, client := range chatParticipants {
 				if username != newMessage.FromUser {
