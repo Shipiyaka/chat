@@ -1,6 +1,7 @@
 package main
 
 import (
+	"chat/app/db"
 	"chat/app/hub"
 	"chat/app/logging"
 	"chat/app/server"
@@ -23,6 +24,10 @@ func init() {
 	logging.Logger.Info("Logging started")
 
 	if err := env.Parse(&cfg); err != nil {
+		logging.Logger.Fatal(err)
+	}
+
+	if err := db.InitDBInstance(cfg.DBPath); err != nil {
 		logging.Logger.Fatal(err)
 	}
 }

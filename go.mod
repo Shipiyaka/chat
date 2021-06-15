@@ -7,4 +7,6 @@ require (
 	github.com/gorilla/websocket v1.4.2
 	github.com/sirupsen/logrus v1.8.1
 	golang.org/x/sys v0.0.0-20210309074719-68d13333faf2 // indirect
+	gorm.io/driver/sqlite v1.1.4
+	gorm.io/gorm v1.20.7
 )

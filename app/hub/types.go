@@ -51,7 +51,7 @@ func (c *client) write() {
 
 	for {
 		select {
-		case message, ok := <-c.incoming:
+		case sendable, ok := <-c.incoming:
 			if !ok {
 				c.conn.WriteMessage(websocket.CloseMessage, []byte{})
 				return
@@ -63,7 +63,7 @@ func (c *client) write() {
 				return
 			}
 
-			w.Write(message.serialize())
+			w.Write(sendable.serialize())
 
 			if err := w.Close(); err != nil {
 				logging.Logger.Error(err)
