@@ -1,7 +1,6 @@
 package hub
 
 import (
-	"chat/app/db"
 	"chat/app/logging"
 
 	"github.com/gorilla/websocket"
@@ -14,7 +13,7 @@ var (
 
 	deleteClientCh = make(chan *client, 1)
 
-	newMessageCh = make(chan message, 1)
+	newMessageCh = make(chan *message, 1)
 )
 
 func EventHandler() {
@@ -28,27 +27,9 @@ func EventHandler() {
 			go client.read()
 			go client.write()
 
-			history := make([]db.Message, 0)
-			err := db.ReturnValues(map[string]interface{}{}, &history)
+			err := sendOldMessages(client)
 			if err != nil {
 				logging.Logger.Error(err)
-			} else if len(history) == 0 {
-				logging.Logger.Info("0 entries in message history")
-			} else {
-				for _, oldMessage := range history {
-					var forSending message
-
-					forSending.FromUser = oldMessage.FromUser
-					forSending.Date = oldMessage.Date
-
-					if oldMessage.ContentType == "image" {
-						forSending.Img = oldMessage.Content
-					} else if oldMessage.ContentType == "text" {
-						forSending.Text = oldMessage.Content
-					}
-
-					client.incoming <- &forSending
-				}
 			}
 
 			client.incoming <- client
@@ -67,23 +48,11 @@ func EventHandler() {
 		case newMessage := <-newMessageCh:
 			for username, client := range chatParticipants {
 				if username != newMessage.FromUser {
-					client.incoming <- &newMessage
+					client.incoming <- newMessage
 				}
 			}
 
-			messageContent := newMessage.Text
-			contentType := "text"
-			if messageContent == "" {
-				messageContent = newMessage.Img
-				contentType = "image"
-			}
-
-			err := db.Insert(&db.Message{
-				Content:     messageContent,
-				ContentType: contentType,
-				FromUser:    newMessage.FromUser,
-				Date:        newMessage.Date,
-			})
+			err := saveMessage(newMessage)
 			if err != nil {
 				logging.Logger.Error(err)
 			}
