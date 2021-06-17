@@ -3,7 +3,6 @@ package server
 import (
 	"chat/app/hub"
 	"chat/app/logging"
-	"html/template"
 	"net/http"
 	"time"
 
@@ -26,11 +25,7 @@ func upgradeConnToWS(w http.ResponseWriter, r *http.Request) {
 }
 
 func chatPage(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./templates/index.html"))
-	err := tmpl.Execute(w, nil)
-	if err != nil {
-		http.Error(w, "Error while parsing html file", http.StatusInternalServerError)
-	}
+	http.ServeFile(w, r, "./templates/index.html")
 }
 
 func GetServerInstance(addr string) *http.Server {
