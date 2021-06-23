@@ -13,8 +13,10 @@ type sendable interface {
 }
 
 type client struct {
-	conn         *websocket.Conn
-	ChatUsername string `json:"username"`
+	conn          *websocket.Conn
+
+	ChatUsername  string `json:"username"`
+	UsernameColor string `json:"username_color"`
 
 	incoming chan sendable
 }
@@ -84,10 +86,11 @@ func (c *client) serialize() []byte {
 }
 
 type message struct {
-	Text     string `json:"text,omitempty"`
-	Img      string `json:"img,omitempty"`
-	FromUser string `json:"from_user"`
-	Date     string `json:"date"`
+	Text          string `json:"text,omitempty"`
+	Img           string `json:"img,omitempty"`
+	FromUser      string `json:"from_user"`
+	UsernameColor string `json:"username_color"`
+	Date          string `json:"date"`
 }
 
 func (m *message) serialize() []byte {

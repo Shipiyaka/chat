@@ -22,7 +22,7 @@ func EventHandler() {
 		case newConn := <-NewConnCh:
 			randomUsername := randomString()
 
-			client := &client{conn: newConn, ChatUsername: randomUsername, incoming: make(chan sendable)}
+			client := &client{conn: newConn, ChatUsername: randomUsername, UsernameColor: randomColor(), incoming: make(chan sendable)}
 
 			go client.read()
 			go client.write()

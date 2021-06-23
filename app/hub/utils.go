@@ -4,26 +4,42 @@ import (
 	"chat/app/db"
 	"encoding/json"
 	"math/rand"
+	"strings"
 	"time"
 )
 
 const (
 	charset = "abcdefghijklmnopqrstuvwxyz" +
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	randomStringLen = 8
+	colorCharset    = "0123456789ABCDEF"
+	randomStringLen = 5
 )
 
 var seededRand *rand.Rand = rand.New(
 	rand.NewSource(time.Now().UnixNano()))
 
-func randomString() string {
-	b := make([]byte, randomStringLen)
+func randomColor() string {
+	var strBuilder strings.Builder
+	strBuilder.Grow(6)
 
-	for i := range b {
-		b[i] = charset[seededRand.Intn(len(charset))]
+	strBuilder.WriteString("#")
+
+	for i := 0; i < 6; i++ {
+		strBuilder.WriteByte(colorCharset[seededRand.Intn(16)])
 	}
 
-	return string(b)
+	return strBuilder.String()
+}
+
+func randomString() string {
+	var strBuilder strings.Builder
+	strBuilder.Grow(randomStringLen)
+
+	for i := 0; i < randomStringLen; i++ {
+		strBuilder.WriteByte(charset[seededRand.Intn(len(charset))])
+	}
+
+	return strBuilder.String()
 }
 
 func unmarshalMessage(b []byte) (*message, error) {
@@ -45,10 +61,11 @@ func sendOldMessages(c *client) error {
 	}
 
 	for _, oldMessage := range oldMessages {
-		var forSending message
-
-		forSending.FromUser = oldMessage.FromUser
-		forSending.Date = oldMessage.Date
+		forSending := message{
+			FromUser:      oldMessage.FromUser,
+			Date:          oldMessage.Date,
+			UsernameColor: oldMessage.UsernameColor,
+		}
 
 		if oldMessage.ContentType == "image" {
 			forSending.Img = oldMessage.Content
@@ -77,10 +94,11 @@ func saveMessage(m *message) error {
 	}
 
 	err := db.Insert(&db.Message{
-		Content:     content,
-		ContentType: contentType,
-		FromUser:    m.FromUser,
-		Date:        m.Date,
+		Content:       content,
+		ContentType:   contentType,
+		UsernameColor: m.UsernameColor,
+		FromUser:      m.FromUser,
+		Date:          m.Date,
 	})
 
 	return err
