@@ -7,8 +7,8 @@ body {
 }
 
 :active,
- :hover,
- :focus {
+:hover,
+:focus {
     outline: 0;
     outline-offset: 0;
 }
@@ -48,7 +48,7 @@ img {
     position: fixed;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 4;
     -webkit-box-shadow: 0 1px 2px #c9c9c9;
     -moz-box-shadow: 0 1px 2px #c9c9c9;
     box-shadow: 0 1px 2px #c9c9c9;
@@ -66,8 +66,12 @@ img {
     color: #2d2d2d;
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-style: italic;
     padding-left: 2.1%;
+}
+
+.headerLogoPic {
+    width: 47px;
+    vertical-align: middle;
 }
 
 
@@ -80,21 +84,85 @@ img {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 3;
     overflow: hidden;
     display: flex;
 }
 
+
+/* onlineUsersList */
+
+.onlineUsersList {
+    float: left;
+    left: 0;
+    width: 25%;
+    /* border: 2px solid red; */
+    height: 100%;
+    top: 53px;
+    position: fixed;
+    padding-top: 20px;
+    scrollbar-width: none;
+    background-color: white;
+    box-shadow: 0 1px 5px #c9c9c9;
+    z-index: 3;
+}
+
+.onlineUsersListHeading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    padding-left: 20px;
+    
+}
+
+.onlineStatus {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+    margin: 1%;
+    background-color: rgb(116, 255, 47);
+    bottom: 1px;
+  }
+
+.onlineUserInList {
+    position: relative;
+    left: 20px;
+}
+
+.onlineUsersInListProfilePic {
+    position: absolute;
+    left: 20px;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    top: 8px;
+}
+
+.onlineUsersInListLogin {
+    position: absolute;
+    left: 70px;
+    top: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* chat */
+
 .chat {
-    width: 100%;
+    width: 75%;
     background-color: whitesmoke;
     overflow: hidden;
-    vertical-align: middle;
-    margin-left: auto;
+    /* vertical-align: middle; */
+    margin-left: 25%;
     margin-right: auto;
     position: relative;
     top: 53px;
     padding-bottom: 105px;
+    /* border: 2px solid blueviolet; */
 }
 
 
@@ -108,7 +176,7 @@ img {
     top: -1px;
     display: flex;
     align-items: center;
-    z-index: 1000;
+    z-index: 4;
 }
 
 .chatRoomName {
@@ -130,12 +198,36 @@ img {
     height: 45px;
 }
 
+
+/* messages */
+
 #messages {
     width: 100%;
     position: relative;
     padding-top: 20px;
     -ms-overflow-style: none;
     scrollbar-width: none;
+}
+
+
+/* Animation for message*/
+
+@keyframes moveOutcomingMessage {
+    0% {
+        transform: translate3d(600px, 0, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes moveIncomingMessage {
+    0% {
+        transform: translate3d(-600px, 0, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
 }
 
 
@@ -149,6 +241,10 @@ img {
     max-width: 640px;
     clear: both;
     float: left; 
+}
+
+.incomingMessage:last-child {
+    animation: moveIncomingMessage 0.15s linear;
 }
 
 .incomingMessageItem {
@@ -167,7 +263,7 @@ img {
 
 .incomingMessageContent {
     margin-bottom: 12px;
-    background-color: #3b414a;
+    background-color: #48494e;
     padding: 10px 20px;
     color: #ffffff;
     -moz-border-radius: 20px;
@@ -203,6 +299,10 @@ img {
     max-width: 640px;
     clear: both;
     float: right;
+}
+
+.outgoingMessage:last-child {
+    animation: moveOutcomingMessage 0.15s linear;
 }
 
 .outgoingMessageItem {
@@ -269,6 +369,7 @@ img {
     margin-top: 3px;
 }
 
+
 /* middleMessage */
 
 .middleMessage {
@@ -299,8 +400,9 @@ img {
     align-items: center;
     display: flex;
     justify-content: space-between;
-    z-index: 1000;
+    z-index: 4;
     height: 50px;
+    box-shadow: 0 0 5px #c9c9c9;
 }
 
 #messageInput {
@@ -358,4 +460,34 @@ input {
     background-size: 30px 30px;
     background-repeat: no-repeat;
     opacity: 1;
+}
+
+
+/* nicknameEntering */
+
+.nicknameEnteringBackground {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    align-content: center; 
+    justify-content: center; 
+    overflow: none;   
+}
+
+.nicknameEnteringWindow {
+    background-color: white;
+    width: 45%;
+    height: 30%;
+    border-radius: 20px;
+}
+
+#nicknameInput {
+    width: 90%;
+    height: 35px;
+    outline: none;
+    border: none;
 }

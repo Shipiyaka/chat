@@ -1,5 +1,6 @@
 *.exe
 *.log
+*.db
 .DS_Store
 .idea
 chat
